@@ -57,6 +57,7 @@
   gap: 24px;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 32px;
   
 }
 
@@ -108,9 +109,36 @@
   width: 50px; /* Розмір картинки (може бути анімація, текст, інше) */
   height: 50px;
   animation: spin 1s linear infinite; /* Анімація обертання */
+  margin-bottom: 32px;
 }
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.more{
+  display: flex;
+  justify-content: center;
+}
+
+.more-btn{
+  display: block;
+  border: 0px;
+  border-radius: 8px;
+  background: #4E75FF;
+  color: #FFF;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.64px;
+  width: 125px;
+  height: 40px;
+
+}
+
+.more-btn:hover{
+  background: #6C8CFF;
 }

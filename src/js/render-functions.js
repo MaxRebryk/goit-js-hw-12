@@ -3,7 +3,6 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 export const gallery = document.querySelector(".gallery-ul");
 export function renderPhoto(photo) {
-  
   let markup = "";
   for (let key in photo.hits){
     markup += `
@@ -21,7 +20,7 @@ export function renderPhoto(photo) {
         </ul>
         <li>`;
   }
-  gallery.insertAdjacentHTML("afterbegin", markup);
+  gallery.insertAdjacentHTML("beforeend", markup);
 }
 
 export function clearGalleryHtml (){
