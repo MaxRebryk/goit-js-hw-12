@@ -9,6 +9,7 @@ import * as render from "./js/render-functions.js";
 const searchInput = document.querySelector(".search-input");
 const searchButton = document.querySelector(".search-btn");
 const moreButton = document.querySelector(".more-btn");
+
 const loader = document.querySelector(".loader");
 let gallerys = new SimpleLightbox('.gallery a', {captionsData: `alt`, captionDelay: 250,});
 let searchWord;
@@ -34,12 +35,14 @@ searchButton.addEventListener("click", (event) =>{
     }
     else{
         showLoader();
-        httpFunc.fetchImages(searchWord,page)
+        httpFunc.fetchImages(searchWord,page = 1)
         .then((images) => {
             hideLoader();
+            render.clearGalleryHtml ()
             if (images.hits.length > 0) {
               render.renderPhoto(images);
               gallerys.refresh();
+              moreButton.style.display = "block"
             } else {
               iziToast.show({
                 title: 'Error',
@@ -47,6 +50,7 @@ searchButton.addEventListener("click", (event) =>{
                 position: 'topLeft',
                 backgroundColor: "red",
               });
+              
             }
           })
         .catch((error) => {
@@ -56,6 +60,7 @@ searchButton.addEventListener("click", (event) =>{
        
         searchInput.value = "";
     }});
+
     moreButton.addEventListener("click", async (event) => {
       event.preventDefault();
       const images = await httpFunc.fetchImages(searchWord, page);
@@ -66,13 +71,17 @@ searchButton.addEventListener("click", (event) =>{
         if (images.hits.length > 0) {
           render.renderPhoto(images,);
           gallerys.refresh();
-        } else {
+          scroll();
+        } 
+        else {
           iziToast.show({
             title: 'Error',
             message: 'No more images found',
             position: 'topLeft',
             backgroundColor: "red",
           });
+          moreButton.style.display = "none"
+          
         }
       } catch (error) {
         hideLoader();
@@ -80,5 +89,14 @@ searchButton.addEventListener("click", (event) =>{
       }
     });
 
-
+function scroll () {
+  const photo = document.querySelector(".photo-img");
+  const sizePhoto = photo.getBoundingClientRect();
+  const squarePhoto = sizePhoto.width * sizePhoto.height;
+  window.scroll({
+    top: window.scrollY + squarePhoto, 
+    left: 0,                  
+    behavior: 'smooth'         
+  });
+}
 
