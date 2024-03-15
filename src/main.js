@@ -21,7 +21,7 @@ function showLoader() {
 function hideLoader() {
     loader.style.display = "none";
 }
-searchButton.addEventListener("click", (event) =>{
+searchButton.addEventListener("click", async (event) =>{
     event.preventDefault();
     searchWord =  searchInput.value;
     if(searchInput.value === ""){
@@ -35,8 +35,8 @@ searchButton.addEventListener("click", (event) =>{
     }
     else{
         showLoader();
-        httpFunc.fetchImages(searchWord,page = 1)
-        .then((images) => {
+        try{
+            const images = await httpFunc.fetchImages(searchWord,page = 1)
             hideLoader();
             render.clearGalleryHtml ()
             if (images.hits.length > 0) {
@@ -52,21 +52,20 @@ searchButton.addEventListener("click", (event) =>{
               });
               
             }
-          })
-        .catch((error) => {
-            hideLoader();
-            console.log(error);
-        });
+        }
+       catch {
+        console.log(error);
+       }
        
         searchInput.value = "";
     }});
 
     moreButton.addEventListener("click", async (event) => {
       event.preventDefault();
-      const images = await httpFunc.fetchImages(searchWord, page);
       showLoader();
+      page += 1;
       try {
-        httpFunc.fetchImages(searchWord,page += 1)
+        const images = await httpFunc.fetchImages(searchWord, page);
         hideLoader();
         if (images.hits.length > 0) {
           render.renderPhoto(images,);
@@ -84,7 +83,6 @@ searchButton.addEventListener("click", (event) =>{
           
         }
       } catch (error) {
-        hideLoader();
         console.log(error);
       }
     });
