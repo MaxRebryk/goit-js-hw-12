@@ -42,7 +42,9 @@ searchButton.addEventListener("click", async (event) =>{
             if (images.hits.length > 0) {
               render.renderPhoto(images);
               gallerys.refresh();
-              moreButton.style.display = "block"
+              images.hits.length >= 15 ? moreButton.style.display = "block" : moreButton.style.display = "none";
+
+
             } else {
               iziToast.show({
                 title: 'Error',
