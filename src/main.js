@@ -71,7 +71,7 @@ searchButton.addEventListener("click", async (event) =>{
           render.renderPhoto(images,);
           gallerys.refresh();
           scroll();
-        } 
+        }  
         else {
           iziToast.show({
             title: 'Error',
